@@ -66,6 +66,6 @@ If this bot helped you, give it a star on GitHub!
 ---
 ## 🔗 Links
 
-- **Invite Bot**: [Click here to invite](https://discord.com/oauth2/authorize?client_id=1540997512394178570&permissions=292620288&integration_type=0&scope=bot+applications.commands)
+- **Invite Bot**: [Click here to invite](https://discord.com/oauth2/authorize?client_id=1540997512394178570&permissions=8&scope=bot+applications.commands)
 
 Made with ❤️ for all the yappers out there!
