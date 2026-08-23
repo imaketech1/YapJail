@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import logging
 import asyncio
 from pathlib import Path
+import json
+
+from keep_alive import keep_alive
 
 # Setup logging
 logging.basicConfig(
@@ -22,7 +25,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 if not TOKEN:
-    logger.error("No DISCORD_TOKEN found in .env file")
+    logger.error("❌ No DISCORD_TOKEN found in .env file")
     raise ValueError("No DISCORD_TOKEN found in .env file")
 
 # Bot setup
@@ -35,7 +38,8 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 @bot.event
 async def on_ready():
-    logger.info(f'{bot.user} has connected to Discord!')
+    logger.info(f'✅ {bot.user} has connected to Discord!')
+    logger.info(f'📊 Bot is in {len(bot.guilds)} guilds')
     
     # Load cogs
     try:
@@ -44,11 +48,12 @@ async def on_ready():
     except Exception as e:
         logger.error(f'❌ Failed to load YapJail cog: {e}')
     
+    # Sync slash commands
     try:
         synced = await bot.tree.sync()
-        logger.info(f'✅ Synced {len(synced)} command(s)')
+        logger.info(f'Synced {len(synced)} command(s)')
     except Exception as e:
-        logger.error(f'❌ Failed to sync commands: {e}')
+        logger.error(f'Failed to sync commands: {e}')
     
     # Log active jails
     try:
@@ -73,6 +78,7 @@ async def on_command_error(ctx, error):
 if __name__ == '__main__':
     try:
         logger.info("Starting YapJail bot...")
+        keep_alive()
         bot.run(TOKEN)
     except KeyboardInterrupt:
         logger.info('Bot stopped by user')
